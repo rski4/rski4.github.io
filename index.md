@@ -1,5 +1,5 @@
 ---
-image: /assets/images/Kohawk.png
+image: /assets/images/(Kohawk.png)
 ---
 # Coe College Baseball Analytics
 
