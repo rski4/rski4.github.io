@@ -1,3 +1,6 @@
+---
+layout: default
+---
 
 # Coe College Baseball Analytics
 
