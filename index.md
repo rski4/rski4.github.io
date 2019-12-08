@@ -1,5 +1,6 @@
+---
 image: Kohawk.png
-
+---
 # Coe College Baseball Analytics
 
 ### Run Environment
