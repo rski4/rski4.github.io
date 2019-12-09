@@ -1,5 +1,7 @@
 ---
 title: Coe College Baseball Analytics
+author:
+  name: Ryan Baranowski
 ---
 
 ### Run Environment
