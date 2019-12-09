@@ -1,8 +1,6 @@
 ---
-layout: default
+title: Coe College Baseball Analytics
 ---
-
-# Coe College Baseball Analytics
 
 ### Run Environment
 
