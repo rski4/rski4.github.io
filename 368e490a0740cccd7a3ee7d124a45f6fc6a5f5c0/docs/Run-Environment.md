@@ -1,11 +1,7 @@
 ---
 title: "Coe Baseball Analytics Run Tables"
 author: "Ryan Baranowski"
-date: "8/29/2019"
-output: 
-  html_document:
-    self_contained: false
-    keep_md: true
+output: html_document
 ---
 
 
