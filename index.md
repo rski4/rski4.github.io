@@ -2,8 +2,6 @@
 title: Coe College Baseball Analytics
 author:
   name: Ryan Baranowski
-header:
-  overlay_image: /images/header/Kohawk.png
 ---
 
 ### Run Environment
