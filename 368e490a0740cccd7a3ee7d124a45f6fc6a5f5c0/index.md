@@ -12,11 +12,11 @@ image: /assets/images/Kohawk.png
 
 ### MLB Similarity
 
-[MLB Similarity](https://coebaseballanalytics.shinyapps.io/MLB_Sim_App/)
+[MLB Similarity](https://coebaseballanalytics.shinyapps.io/MLB_Sim_App/){:target="_blank"}
 
 ### Spray Charts
 
-[Spray Charts](https://coebaseballanalytics.shinyapps.io/Spray_Charts/)
+[Spray Charts](https://coebaseballanalytics.shinyapps.io/Spray_Charts/){:target="_blank"}
 
 ### Run Environment
 
