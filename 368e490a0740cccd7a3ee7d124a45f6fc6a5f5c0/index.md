@@ -8,7 +8,7 @@ image: /assets/images/Kohawk.png
 
 ### Coe Statcast
 
-[Pitcher](https://coebaseballanalytics.shinyapps.io/Pitcher_Statcast/)
+[Pitcher](https://coebaseballanalytics.shinyapps.io/Pitcher_Statcast/){:target="_blank"}
 
 ### MLB Similarity
 
