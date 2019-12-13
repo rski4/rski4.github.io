@@ -4,9 +4,8 @@ author:
   name: Ryan Baranowski
 image: /assets/images/Kohawk.png
 ---
-# Coe College Baseball Analytics
 
----
+# Coe College Baseball Analytics
 
 ### Coe Statcast
 
