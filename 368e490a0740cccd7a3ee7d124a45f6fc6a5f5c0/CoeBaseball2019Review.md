@@ -1,7 +1,6 @@
 ---
 title: "Coe College Baseball 2019 Review"
 author: "Luke Smailes"
-date: "10/23/2019"
 output: html_document
    
 ---
