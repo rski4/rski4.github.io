@@ -41,5 +41,5 @@ This page analyzes the run scoring environment for the ARC using standard and ad
 
 ### Year in Review
 
-[2019 Year in Review](CoeBaseball2019Review.md)
+[2019 Year in Review](CoeBaseball2019Review.html)
 
