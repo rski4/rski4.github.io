@@ -333,8 +333,8 @@ The individual stats from our pitching staff make understanding our success a lo
 ## Multiple R-squared:  0.8401,	Adjusted R-squared:  0.8327 
 ## F-statistic: 114.1 on 7 and 152 DF,  p-value: < 2.2e-16
 ```
-```
-![](CoeBaseball2019Review_files/figure-html/unnamed-chunk-5-1.png)<!-- --><table class="table table-striped table-hover" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+
+<table class="table table-striped table-hover" style="font-size: 12px; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
    <th style="text-align:left;"> Player </th>
@@ -529,7 +529,7 @@ The individual stats from our pitching staff make understanding our success a lo
   </tr>
 </tbody>
 </table>
-```
+
 This tells us that in 375 innings pitched by our pitchers in 2019, 62.4% of those were thrown by a top-10 pitcher in the conference and 83% of those were thrown by a top-20 pitcher. As table 5 also shows, neither Simpson nor Nebraska Wesleyan had a top-20 pitcher. Wartburg and Loras only had 1 -- neither of whom were regular starting pitchers.
 
 Other takeaways from Table 5 are that Riley LeGrand seems too high and All-American Gage Smart and ARC Pitcher of the Year Zach Kammin seem too low. BABIP is a good metric to look at and it tells us that LeGrand had the third highest BABIP among qualified pitchers at .412. Smart had the lowest BABIP at .171 and Kammin  had the 7th-lowest at .273. As addressed in the hitting section, BABIP extremes on either side of the spectrum can be as a result of the defense behind you, luck, or pure talent level. When looking at those with the best 2019 BABIPs in the ARC, you see the names Smart, Tyrel Johnson, Deardorff, Schneiderman, and Kammin -- pitchers who are known to have some of the best pure stuff to generate consistent weak contact. This is where xFIP (expected fielding independent pitching) will come in handy in the future. Thus, FIP can be used as a better measure of success than ERA, but it still has its limitations in this context. 
