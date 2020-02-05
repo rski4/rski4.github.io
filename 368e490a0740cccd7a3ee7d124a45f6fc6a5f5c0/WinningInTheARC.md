@@ -48,7 +48,7 @@ bbcor <- subset(data, year > 2010)
 
 Wins are what we care about, so pay attention to the top row of the corrplot below. 
 
-```{r Hitting, echo=FALSE, warning=FALSE, message=FALSE, fig.height=10, fig.width=12}
+```{r Hitting, echo=FALSE, warning=FALSE, message=FALSE}
 
 #Correlations with rate statistics
 library(dplyr)
@@ -58,6 +58,9 @@ numeric.a <- a[,numsa]
 #pairs(numeric.a)
 
 library(GGally)
+```
+
+```{r scatter, fig.height=10, fig.width=12}
 ggscatmat(numeric.a) +
   theme(panel.grid.major = element_blank())
 ```
