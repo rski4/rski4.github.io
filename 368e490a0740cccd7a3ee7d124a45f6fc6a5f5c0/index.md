@@ -37,7 +37,7 @@ This interactive application shows spray charts for all players on ARC teams.
 
 This page analyzes the run scoring environment for the ARC using standard and advanced metrics.
 
-[Winning the ARC](WinningTheARC.html)
+[Winning the ARC](WinningInTheARC.html)
 
 This page studies how rate statistics correlate to winning in the ARC.
 
