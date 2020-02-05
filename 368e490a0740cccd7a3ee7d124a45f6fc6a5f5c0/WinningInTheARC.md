@@ -51,6 +51,7 @@ In terms of how this should effect strategy, teams should look to attack mistake
 | 3-0 | 1/7 | .143/.975/.143 (1.118) |
 | 3-1 | 82/235 | .349/.726/.536 (1.262) |
 | 3-2 | 185/725 | .255/.525/.343 (.868) |
+
 The other crucial pitch, as the data shows, is the 1-1 pitch. There is a 167-point difference in batting averege from advancing to either a 1-2 count or a 2-1 count.  
 
 The two strike approaches, while beneficial to prevent strikeouts, generally won't produce the harder hit balls that result in hits. We want to aviod these scenarios when at all possible. Other than the sudden death nature of a full count, 2-strike counts produce sub-.200 batting averages. This why the 1-1 pitch, and to a lesser extent -- the 2-1 pitch, are so crucial in an at-bat. 
