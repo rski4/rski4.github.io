@@ -15,8 +15,8 @@ Arsenal: 4-Seam, Slider, Changeup
 
 MLB Comparables:
 
-* Fastball
-  + [Mark Melancon](https://baseballsavant.mlb.com/savant-player/mark-melancon-453343?stats=statcast-r-pitching-mlb){:target="_blank"} (Cutter)
+* Fastball (Cutter)
+  + [Mark Melancon](https://baseballsavant.mlb.com/savant-player/mark-melancon-453343?stats=statcast-r-pitching-mlb){:target="_blank} 
   
 * Slider
   + [Shawn Kelley](https://baseballsavant.mlb.com/savant-player/shawn-kelley-518875?stats=statcast-r-pitching-mlb) - similar motion without as late of hand separation. Both have good back leg load, but you get better pelvic tilt. However, you don't want to replicate his fastball results - .492 xwOBA. 
