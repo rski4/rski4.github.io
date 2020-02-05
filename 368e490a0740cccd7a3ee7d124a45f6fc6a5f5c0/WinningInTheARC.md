@@ -136,6 +136,7 @@ numeric.d <- d[,numsd]
 #pairs(numeric.d)
 
 library(GGally)
+```
 
 ```{r pitchscat, fig.height=10, fig.width=12} 
 ggscatmat(numeric.d) +
