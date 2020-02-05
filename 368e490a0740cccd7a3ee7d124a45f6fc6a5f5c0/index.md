@@ -13,6 +13,10 @@ image: /assets/images/Kohawk.png
 
 This interactive application displays charts and visuals based on FlightScope pitching data. It also includes a description about how to use and interpret the metrics.
 
+[Pitcher Cards](PitcherCards.html)
+
+An analysis of pitcher data and mechanics 
+
 ---
 
 ### MLB Similarity
