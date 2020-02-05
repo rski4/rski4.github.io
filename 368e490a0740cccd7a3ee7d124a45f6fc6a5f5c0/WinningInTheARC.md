@@ -48,7 +48,7 @@ bbcor <- subset(data, year > 2010)
 
 Wins are what we care about, so pay attention to the top row of the corrplot below. 
 
-```{r Hitting, echo=FALSE, warning=FALSE, message=FALSE}
+```{r Hitting, include=FALSE, warning=FALSE, message=FALSE}
 
 #Correlations with rate statistics
 library(dplyr)
@@ -77,7 +77,7 @@ The run values also exemplify that the trade-off of a power driven approach and 
 
 To ensure that the run-crazy BESR era isn't skewing the results too much, I ran the corrplot for just the years 2011-2019 -- when the NCAA switched to BBCOR bats.
 
-```{r Hitting BBCOR, echo=FALSE, fig.height=10, fig.width=12}
+```{r Hitting BBCOR, include=FALSE}
 library(dplyr)
 bb <- select(bbcor,w,rate1B,rate2B,rate3B,rateHR,avg,slg,bbRate,kRate,ob,sf,sh,sb)
 numsbb <- unlist(lapply(bb, is.numeric))
@@ -85,6 +85,9 @@ numeric.bb <- bb[,numsbb]
 #pairs(numeric.bb)
 
 library(GGally)
+```
+
+```{r hitscat, fig.height=10, fig.width=12}
 ggscatmat(numeric.bb) +
   theme(panel.grid.major = element_blank())
 ```
@@ -125,7 +128,7 @@ The idea isn't to not accept walks when pitchers give them to us -- we absolutel
 
 Finally, the launch angle hitting emphasis needs to stay out of the ARC. The optimal launch angle for D-III is much lower to where we want more line drives and hard ground balls. The "elevate to celebrate" culture does not translate to wins in the ARC. It results in high, deep fly balls that outfielders easily catch because they are usually not hit hard enough at this level. 2019 showed us that a lot of lower launch angle, solid base hits will produce long innings that wear down already thin pitching staffs. Even if a team can slug their way to the postseason, they will then face better quality pitching that will expose teams that can't make consistent contact.
 
-```{r Pitching, echo=FALSE, fig.height=10, fig.width=12}
+```{r Pitching, include=FALSE}
 library(dplyr)
 d <- select(data,w,rateHa,rateRa,rate1Ba, rate2Ba, rate3Ba, rateHRa, b.avg, bbRatep, kRatep,RATExBH)
 numsd <- unlist(lapply(d, is.numeric))
@@ -133,6 +136,8 @@ numeric.d <- d[,numsd]
 #pairs(numeric.d)
 
 library(GGally)
+
+```{r pitchscat, fig.height=10, fig.width=12} 
 ggscatmat(numeric.d) +
   theme(panel.grid.major = element_blank())
 ```
