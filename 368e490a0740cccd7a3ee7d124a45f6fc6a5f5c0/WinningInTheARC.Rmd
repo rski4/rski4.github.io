@@ -1,10 +1,7 @@
 ---
 title: "Winning In The ARC"
 author: "Luke Smailes"
-output: 
-  html_document:
-    self_contained: false
-    keep_md: true
+output: html_document
 ---
 
 Utilizing almost 2 decades worth of American Rivers Conference baseball data, we can objectively determine optimal game strategies. Due to the differentiating run enviornments between the ARC and MLB, game strategies should reflect what this data shows. A big reason why Coe Baseball was so successful in 2019 was because we played to the optimal strategies of the ARC. Through the following correlation plots, the important aspects of run scoring and run prevention are shown. As a result, we can not only ensure that our in-game strategies are data driven, but we can also optimize practice time as we correctly train the outcomes that result in wins.  
