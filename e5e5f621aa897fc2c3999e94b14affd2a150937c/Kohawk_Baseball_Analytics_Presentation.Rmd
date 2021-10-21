@@ -1,0 +1,109 @@
+---
+title: "Kohawk Baseball Analytics"
+author: Ryan Baranowski
+date: 10/21/2021
+output: 
+  ioslides_presentation:
+    transition: "faster"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(kableExtra)
+library(png)
+library(knitr)
+```
+
+## Analytics Overview
+
+Data Analytics: The use of data to drive decision making
+
+``` {r, out.width = "95%"}
+include_graphics("Data_Science_Process.png")
+```
+
+## Program Overview
+
+- Goal: Provide useful insight for coaches and players
+- Data
+  - Season Summary
+  - Play-by-Play (Noah Purcell)
+  - FlightScope
+  - HitTrax
+- Use
+  - Game strategy
+  - Player Development
+
+## Data Collection
+
+``` {r}
+include_url("https://rollrivers.com/stats.aspx?path=baseball&year=2021")
+
+```
+
+## Data Analysis
+
+``` {r}
+
+include_url("https://rski4.github.io/e5e5f621aa897fc2c3999e94b14affd2a150937c/Run-Environment.html")
+```
+
+## FlightScope
+
+``` {r}
+
+include_url("https://baseball.flightscope.com")
+```
+
+## FlightScope Data
+
+- Pitch Basics
+  - Speed, Location
+- Release
+  - Height, Side, Extension
+- Spin
+  - Rate, Axis
+- Movement
+  - Vertical (Induced), Horizontal
+- 50 feet
+  - Movement, Velocity, Acceleration
+- Batted Ball
+  - Exit Velocity, Launch Angle, Direction, Distance
+  
+## FlightScope Data Analysis  
+
+``` {r}
+
+include_app("https://coebaseballanalytics.shinyapps.io/Pitcher_Statcast/")
+
+```
+
+## Other Projects
+
+``` {r}
+
+include_app("https://coebaseballanalytics.shinyapps.io/MLB_Similarity/")
+
+```
+
+## MLB Version
+
+``` {r}
+
+include_url("https://baseballsavant.mlb.com/visuals")
+```
+
+
+## Future Projects
+
+- Improve database management
+- Improve web site
+- 3D pitch modeling
+- Pitch design sessions
+- Effective spin analysis
+- Study approach angle effects
+- Biomechanics
+- Hitting analytics
+- Open to new ideas!!!
+
