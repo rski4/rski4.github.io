@@ -1,0 +1,349 @@
+---
+title: "Coe Baseball Analytics"
+author: "Ryan Baranowski"
+date: "10/22/2019"
+output:
+  slidy_presentation:
+    footer: Coe Baseball Analytics 2019
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+```{r library, include=FALSE}
+library(tidyverse)
+library(RCurl)
+library(ggplot2)
+library(ggthemes)
+library(purrr)
+library(knitr)
+library(kableExtra)
+library(data.table)
+library(DT)
+
+```
+```{r data game/play, include=FALSE}
+play17 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/pbp17_runexp.csv"))
+play18 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/pbp18_runexp.csv"))
+play19 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/pbp19_runexp.csv"))
+
+play <- rbind(play17, play18, play19)
+
+game <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/games/games.csv"))
+```
+```{r data flightscope, include=FALSE}
+# Functions to fix FlightScope Variables
+eval(parse(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/flightscopeVar.R")))
+eval(parse(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/ConvertSci.R")))
+
+# Import Scrimmage Data
+scrim.1 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Game/Results-Export-Scientific-9-11.csv"), col.names = paste("col", 1:77, sep = "."))
+scrim.2 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Game/Results-Export-Scientific-9-7-1.csv"), col.names = paste("col", 1:77, sep = "."))
+scrim.3 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Game/Results-Export-Scientific-9-7-2.csv"), col.names = paste("col", 1:77, sep = "."))
+
+scrim.1 <- flightscopeVar(scrim.1)
+scrim.2 <- flightscopeVar(scrim.2)
+scrim.3 <- flightscopeVar(scrim.3)
+
+scrim <- rbindlist(list(scrim.1, scrim.2, scrim.3))
+scrim <- ConvertSci(scrim)
+
+scrim$pitch.type <- gsub("^$", "No Type", scrim$pitch.type)
+
+scrim$sess.type <- "Scrimmage"
+
+# Import Bullpen Data
+bpen.1 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Bullpen/Bullpen.01.22.2019.csv"), col.names = paste("col", 1:77, sep = "."))
+bpen.2 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Bullpen/BPen_2019_01_26.csv"), col.names = paste("col", 1:77, sep = "."))
+bpen.3 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Bullpen/BPen_2019_01_26_2.csv"), col.names = paste("col", 1:77, sep = "."))
+bpen.4 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Bullpen/BPen_2019_01_26_3.csv"), col.names = paste("col", 1:77, sep = "."))
+bpen.5 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Bullpen/BPen_2019_01_29.csv"), col.names = paste("col", 1:77, sep = "."))
+bpen.6 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Bullpen/BPen_2019-02-02.csv"), col.names = paste("col", 1:77, sep = "."))
+bpen.7 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Bullpen/BPen_2019_02_09.csv"), col.names = paste("col", 1:77, sep = "."))
+bpen.8 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Bullpen/BPen_2019_02_16.csv"), col.names = paste("col", 1:77, sep = "."))
+
+bpen.8 <- flightscopeVar(bpen.8)
+
+bpen <- rbindlist(list(bpen.1, bpen.2, bpen.3, bpen.4, bpen.5, bpen.6, bpen.7, bpen.8))
+
+bpen <- flightscopeVar(bpen)
+
+bpen$pitch.type <- sub("^$", "No Type", bpen$pitch.type)
+bpen$pitch.type <- sub("Undefined", "No Type", bpen$pitch.type)
+bpen$pitch.type[is.na(bpen$pitch.type)] <- "No Type"
+bpen$pitch.type <- sub("Four Seam Fastball", "Fastball", bpen$pitch.type)
+bpen$pitch.type <- sub("Two Seam Fastball", "Fastball", bpen$pitch.type)
+
+bpen$sess.type <- "Bullpen"
+bpen <- bpen %>% 
+    mutate(
+        pitch.break.h = pitch.approach.h/12,
+        pitch.break.v = pitch.break.v/12
+    )
+
+
+# Import Live Data
+
+live.1 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Live/Live_2019_02_05_sci.csv"), col.names = paste("col", 1:77, sep = "."))
+live.2 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Live/Live_2019_02_12_sci.csv"), col.names = paste("col", 1:77, sep = "."))
+live.3 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Live/Live_2019_02_19_sci.csv"), col.names = paste("col", 1:77, sep = "."))
+live.4 <- read.csv(text = getURL("https://raw.githubusercontent.com/rski4/Test/master/FlightScope/Live/Live_2019_02_25_sci.csv"), col.names = paste("col", 1:77, sep = "."))
+
+live <- data.frame(rbindlist(list(live.1, live.2, live.3, live.4)))
+
+live <- flightscopeVar(live)
+
+live <- ConvertSci(live)
+
+live$pitch.type <- sub("^$", "No Type", live$pitch.type)
+live$pitch.call <- sub("^$", "No Outcome", live$pitch.call)
+live$pitch.type <- sub("Four Seam Fastball", "Fastball", live$pitch.type)
+live$pitch.type <- sub("Two Seam Fastball", "Fastball", live$pitch.type)
+
+live$sess.type <- "Live"
+
+# All Data
+
+all.sess <- rbindlist(list(scrim, live, bpen))
+
+all.sess$pitch.type <- all.sess$pitch.type %>% 
+  gsub("Cutter", "Fastball", .) %>%
+  gsub("Sinker", "Fastball", .) %>% 
+  gsub("Undefined", "No Type", .) %>% 
+  gsub("Splitter", "Fastball", .)
+
+all.sess$pitcher <- all.sess$pitcher %>% 
+  gsub("Tyrell", "TJ", .)
+
+mlb.spin <- read.csv("pitch_arsenals.csv")
+mlb.movement <- read.csv("pitch_movement.csv")
+
+mlb.spin.long <- mlb.spin %>% 
+    gather(pitch_type, spin_rate, 4:11) %>% 
+    drop_na()
+
+mlb.spin.long$pitch_type <- str_extract(mlb.spin.long$pitch_type, "^.{2}")
+
+mlb.spin.long$pitch_type <- mlb.spin.long$pitch_type %>% 
+    gsub("ff", "FF", .) %>% 
+    gsub("si", "SIFT", .) %>% 
+    gsub("fc", "FC", .) %>% 
+    gsub("sl", "SL", .) %>% 
+    gsub("ch", "CH", .) %>% 
+    gsub("cu", "CUKC", .) %>% 
+    gsub("fs", "FS", .)
+
+mlb.spin.long <- mlb.spin.long %>% 
+    rename(pitcher_id = pitcher)
+
+mlb.p <- merge(select(mlb.spin.long, last_name, first_name, pitcher_id, pitch_type, spin_rate),
+                       select(mlb.movement, last_name, first_name, pitcher_id, pitch_type, pitcher_break_z, pitcher_break_x),
+                       c('last_name', 'first_name', 'pitcher_id', 'pitch_type'))
+        
+        mlb.p$pitch_type <- mlb.p$pitch_type %>% 
+            gsub("FF", "Fastball", .) %>% 
+            gsub("SIFT", "Sinker", .) %>% 
+            gsub("FC", "Cutter", .) %>% 
+            gsub("SL", "Slider", .) %>% 
+            gsub("CH", "Changeup", .) %>% 
+            gsub("CUKC", "Curveball", .) %>% 
+            gsub("FS", "Splitter", .)
+  
+
+```
+
+## Baseball Analytics
+<link href="bootstrap.min.css" rel="stylesheet">
+<style>
+div.crimson { background-color:#B22222; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "crimson">
+
+**Analytics:** Using data to drive decision making
+
+</div>
+<br>
+
+Can we use MLB data to inform ARC decisions?
+
+<center>
+<img src="http://www.mlb.com/assets/images/6/6/8/240077668/cuts/original_u1uc9efq_n2r3henc.jpg" width = "300"/>
+</center>
+
+**NO** use principles but not data
+
+## Motivation
+
+- Standard Statistics
+  + Opportunity Driven
+  + Team dependent
+  + Summary
+
+- Advanced Statistics
+  + Context Neutral
+  + Contextual Probabilities
+  + Weight outcomes properly
+  + Better measures of 'talent'
+
+## Data
+
+[Team and Individual Leaderboards](https://rollrivers.com/stats.aspx?path=baseball&year=2019)
+
+[Play by Play](https://rollrivers.com/boxscore.aspx?id=7Gx48kkB20iPlOppZhxXHy%2f5Zy4VtNXkGzuHdKHXRgnlnbzk7%2buzsqXprciVbO5PIBZho7NK7AxMKcz8gDJ%2fvsms1YrAtAIub%2fJvBo6r0udAQ6nexUzZSk4k%2fahYtwi66%2fqqxFV8uyTxIQYawOuowoMdEiAXB47p7FikP15zExE%3d&path=baseball)
+
+- Scrape and parse (Noah Purcell)
+
+[Statcast](https://baseballsavant.mlb.com/statcast_leaderboard)
+
+- Flightscope
+
+## Analysis | Run Environment | Basic
+
+Run scoring context of ARC
+```{r runs basic, echo=FALSE, warning=FALSE, message=FALSE}
+top_inn <- paste("top", c(1:9), sep = "_")
+bot_inn <- paste("bot", c(1:9), sep = "_")
+
+runs_inning_summary_last_5 <- game %>% 
+  filter(Year >= 2014) %>% 
+  select(top_inn, bot_inn) %>% 
+  summarise_all(
+    funs(mean), na.rm = TRUE
+  )
+
+runs_inning_summary_last_5 <- round(runs_inning_summary_last_5, 2)
+
+runs_inning_summary_last_5 <- melt(runs_inning_summary_last_5) %>% 
+  separate(variable, into = c("Half", "Inning"), sep = "_") %>% 
+  rename("Avg_Runs" = value)
+
+ggplot(runs_inning_summary_last_5, aes(Inning, Avg_Runs, fill = factor(Half, levels = c("top", "bot")))) +
+  geom_col(position = 'dodge', color = 'black') +
+  labs(title = "Average Runs", fill = "Half") +
+  theme_calc() +
+  scale_fill_manual(values = c("firebrick3", "gold"))
+  
+
+```
+
+## Analysis | Run Environment | Advanced
+
+Run Expectancy by base/out state 
+```{r base/out state run expectancy, echo=FALSE, message=FALSE, warning=FALSE}
+
+play.re <- play %>%  
+  dplyr::filter(as.character(state) != as.character(new.state) | runs.scored > 0) %>% 
+  dplyr::group_by(half.inning) %>% 
+  dplyr::mutate(
+    outs.inn = sum(outs_on_play)
+  ) %>% 
+  dplyr::filter(outs.inn == 3)
+
+# Average runs to end of inning by state #
+runs <- play.re %>% 
+  dplyr::group_by(state) %>% 
+  dplyr::summarise(
+    avg.runs = mean(runs.roi)
+  )
+
+runs$Outs = substr(runs$state, 5, 5)
+runs = runs[order(runs$Outs),]
+
+runs.out = matrix(round(runs$avg.runs, 2), 8, 3)
+dimnames(runs.out)[[2]] = c("outs_0", "out_1", "outs_2")
+dimnames(runs.out)[[1]] = c("000","001","010","011","100","101","110","111")
+
+base.out.re = as.data.frame(runs.out)
+base.out.re$Base = rownames(base.out.re)
+base.out.re = base.out.re[,c("Base", "outs_0", "out_1", "outs_2")]
+base.out.re <- base.out.re %>% 
+  arrange(outs_0)
+
+base.out.re %>% 
+  kable(booktabs = T, caption = "Run Expectancy", 
+        align = "c", col.names = c("Base", "0 Outs", "1 Out", "2 Outs")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover"), font_size = 12)
+```
+
+Should we sacrifice bunt?
+
+## Analysis | Run Environment | Advanced
+
+What if we need only one run?
+```{r scoring distribution, echo=FALSE, message=FALSE, warning=FALSE}
+play.re$runs.roi.cap <- with(play.re, ifelse(runs.roi < 4, runs.roi, 4))
+
+scoring.dist <- play.re %>% 
+  dplyr::group_by(state, runs.roi.cap) %>% 
+  dplyr::summarise(
+    n = n()) %>% 
+  dplyr::mutate(
+    freq = round(n/sum(n)*100, 1)
+  )
+
+scoring.dist <- merge(runs, scoring.dist, by = "state")  
+scoring.dist$RE <- with(scoring.dist, round(avg.runs, 2))
+
+table.score.dist <- scoring.dist %>%
+  dplyr::select(-Outs, -n, -avg.runs) %>% 
+  tidyr::spread(runs.roi.cap, freq) %>% 
+  dplyr::arrange(state)
+  
+
+table.score.dist %>% 
+  kable(booktabs = T, caption = "Scoring Distribution (%)", 
+        align = "c", col.names = c("State", "RE", "0 Runs", "1 Run", "2 Runs", "3 Runs", "4+ Runs")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover"), font_size = 12)
+
+```
+
+## Analysis | Statcast | Advanced
+
+Spin Rates
+```{r MLB Spin Summary, echo=FALSE, warning=FALSE, message=FALSE}
+mlb.spin.sum <- mlb.p %>% 
+  group_by(pitch_type) %>% 
+  summarise(
+    med.spin = median(spin_rate),
+    max.spin = max(spin_rate),
+    min.spin = min(spin_rate),
+    sd.spin = sd(spin_rate)
+  )
+
+mlb.spin.sum %>% 
+  kable(booktabs = T) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover"), font_size = 12)
+
+```
+
+
+```{r Spin Arsenal, echo=FALSE, warning=FALSE, message=FALSE}
+
+  df.spin <- all.sess %>%
+    filter(pitch.type != "No Type") %>%
+    group_by(pitcher, pitch.type) %>% 
+    summarise(
+      velo = round(median(pitch.spin, na.rm = TRUE), 0),
+      N = n()
+      ) %>%
+    filter(N > 10) %>% 
+    select(-N) %>% 
+    spread(pitch.type, velo) %>% 
+    arrange(desc(Fastball))
+  
+  datatable(df.spin)
+```
+
+## Analysis | Statcast | Advanced
+<center>
+
+<img src="MLB Sim Example.png" width="850"/>
+
+</center>
+
+## Other Projects
+
+- NFL Analytics (Bryce Westin)
+- Tennis Analytics (Brady Anderson)
