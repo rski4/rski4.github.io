@@ -21,7 +21,7 @@ An analysis of pitcher data and mechanics
 
 ### MLB Similarity
 
-[MLB Similarity](https://coebaseballanalytics.shinyapps.io/MLB_Similarity/){:target="_blank"}
+[MLB Similarity](https://coebaseballanalytics.shinyapps.io/MLB_Sim_App/){:target="_blank"}
 
 This interactive application compares pitches from Coe pitchers to MLB pitchers.
 
